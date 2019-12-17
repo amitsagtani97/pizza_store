@@ -15,15 +15,6 @@ export interface DashboardProps {
 
 class Dashboard extends React.Component<DashboardProps> {
 
-    constructor(props: any) {
-        super(props);
-        this.handleAddToCart = this.handleAddToCart.bind(this);
-    }
-
-    handleAddToCart() {
-        // todo do something
-    }
-
     componentDidMount() {
         this.loadUser();
         this.loadPizza();
@@ -38,8 +29,28 @@ class Dashboard extends React.Component<DashboardProps> {
     }
 
     @computed
+    get renderCart() {
+        const {pizzaStore: {pizzaInCart}} = this.props;
+
+        if (pizzaInCart === 0) {
+            return (
+                <div className = "cart">
+                    <img className = "icon" src = "/images/cart.png"/>
+                </div>
+            );
+        }
+        return (
+            <div className = "cart">
+                 <span className = "fa-stack fa-5x has-badge" data-count = {pizzaInCart}>
+                     <img className = "icon" src = "/images/cart.png"/>
+                 </span>
+            </div>
+        );
+    }
+
+    @computed
     get renderTopNav() {
-        const {currentUser} = this.props.authStore;
+        const {authStore: {currentUser}, pizzaStore: {pizzaInCart}} = this.props;
         return (
             <div className = "top-nav mb-5 p-3 d-flex justify-content-between align-items-center">
                 <span onClick = {() => {
@@ -48,27 +59,20 @@ class Dashboard extends React.Component<DashboardProps> {
                     <img className = "icon" src = "/images/pizza.png"/>
                 </span>
                 <div className = "d-flex">
-                    {!currentUser && <a className = "btn btn-outline-primary mr-3" href = "/login" >Login</a>}
-                    <div className = "cart">
-                        <span className = "fa-stack fa-5x has-badge" data-count = "10">
-                            <img className = "icon" src = "/images/cart.png"/>
-                        </span>
-                    </div>
+                    {!currentUser && <a className = "btn btn-outline-primary mr-3" href = "/login">Login</a>}
+                    {this.renderCart}
                 </div>
             </div>
         );
     }
 
-    @computed
     get renderPizzas() {
-        const {pizzas} = this.props.pizzaStore;
         return (
             <div className = "d-flex flex-wrap align-items-center justify-content-center">
-                {pizzas.map((pizza: any) => (
+                {this.props.pizzaStore.pizzas.map((pizza: any) => (
                     <Pizza
                         key = {pizza.id}
                         pizza = {pizza}
-                        handleAddToCart = {this.handleAddToCart}
                     />
                 ))}
             </div>

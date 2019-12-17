@@ -1,5 +1,5 @@
 import {BaseModel} from "./BaseModel";
-import {observable} from "mobx";
+import {action, observable} from "mobx";
 
 export interface PizzaProps {
     id: number;
@@ -17,8 +17,13 @@ export class PizzaModel extends BaseModel<PizzaProps> {
     @observable is_veg: string;
     @observable image_link: string;
     @observable price: number;
+    @observable quantity: number;
 
     constructor(props: PizzaProps) {
         super(props);
+    }
+
+    @action setQuantity(quantity: number) {
+        this.quantity = quantity
     }
 }

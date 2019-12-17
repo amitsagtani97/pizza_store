@@ -3,19 +3,25 @@
   text-align: center;
   width: 24rem;
 
-  .card-body{
+  .card-body {
     padding: 0.5rem 1rem;
   }
 
   .card-img-top {
-    height: 20rem!important;
+    height: 20rem !important;
   }
 
-  .name{
+  .name {
     font-weight: bold;
   }
 
-  .price{
+  .price {
     font-weight: bold;
+  }
+
+  .input-quantity {
+    max-width: 2rem;
+    text-align: center;
+    height: 2.5rem;
   }
 }

@@ -1,6 +1,6 @@
 import axios from "axios";
 import {ROUTE} from "../Routes";
-import {action, observable} from "mobx";
+import {action, computed, observable} from "mobx";
 import {PizzaModel} from "../models/PizzaModel";
 
 export class PizzaStore {
@@ -14,5 +14,15 @@ export class PizzaStore {
         } catch (e) {
             console.log(e);
         }
+    }
+
+    @computed
+    get pizzaInCart() {
+        console.log(this.pizzas.reduce((count, pizza: any) => {
+            return (pizza.quantity || 0) + count;
+        }, 0));
+        return this.pizzas.reduce((count, pizza: any) => {
+            return (pizza.quantity || 0) + count;
+        }, 0);
     }
 }
