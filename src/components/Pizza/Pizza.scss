@@ -1,0 +1,21 @@
+.pizza {
+  margin: 1rem;
+  text-align: center;
+  width: 24rem;
+
+  .card-body{
+    padding: 0.5rem 1rem;
+  }
+
+  .card-img-top {
+    height: 20rem!important;
+  }
+
+  .name{
+    font-weight: bold;
+  }
+
+  .price{
+    font-weight: bold;
+  }
+}

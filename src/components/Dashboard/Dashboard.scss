@@ -1,0 +1,47 @@
+.dashboard {
+  .top-nav {
+    height: 5rem;
+    border-bottom: 1px solid #e9ecef;
+
+    .header {
+      font-weight: bold;
+      font-style: italic;
+      font-size: 3rem;
+      cursor: pointer;
+
+      .icon {
+        width: 3rem;
+        height: 3rem;
+        cursor: pointer;
+      }
+    }
+
+    .icon {
+      width: 2rem;
+      height: 2rem;
+      cursor: pointer;
+    }
+
+    .cart{
+      margin-right: 3rem;
+
+      .fa-stack[data-count]:after {
+        position: absolute;
+        //right: 0.5%;
+        top: 1.8%;
+        content: attr(data-count);
+        font-size: 70%;
+        padding: 0.5em;
+        border-radius: 999px;
+        line-height: .75em;
+        color: white;
+        background: green;
+        text-align: center;
+        min-width: 2em;
+        font-weight: bold;
+      }
+    }
+
+
+  }
+}
