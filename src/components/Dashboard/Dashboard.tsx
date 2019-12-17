@@ -1,14 +1,17 @@
 import React from 'react';
+import {Link, Route, RouteComponentProps, Switch} from 'react-router-dom';
+
 import {computed} from "mobx";
 import {inject, observer} from "mobx-react";
-import Pizza from "../Pizza/Pizza";
 import Loader from "../Loader/Loader";
 import './Dashboard.scss';
 import {AUTH_STORE, PIZZA_STORE} from "../../store/stores";
 import {AuthStore} from "../../store/AuthStore";
 import {PizzaStore} from "../../store/PizzaStore";
+import {PizzaList} from "./PizzaList/PizzaList";
+import {Checkout} from "./Checkout/Checkout";
 
-export interface DashboardProps {
+export interface DashboardProps extends RouteComponentProps {
     [AUTH_STORE]?: AuthStore;
     [PIZZA_STORE]?: PizzaStore;
 }
@@ -30,9 +33,8 @@ class Dashboard extends React.Component<DashboardProps> {
 
     @computed
     get renderCart() {
-        const {pizzaStore: {pizzaInCart}} = this.props;
-
-        if (pizzaInCart === 0) {
+        const {pizzaStore: {pizzaCountInCart}, match} = this.props;
+        if (pizzaCountInCart === 0) {
             return (
                 <div className = "cart">
                     <img className = "icon" src = "/images/cart.png"/>
@@ -41,16 +43,18 @@ class Dashboard extends React.Component<DashboardProps> {
         }
         return (
             <div className = "cart">
-                 <span className = "fa-stack fa-5x has-badge" data-count = {pizzaInCart}>
+                <Link to = "/checkout">
+                    <span className = "fa-stack fa-5x has-badge" data-count = {pizzaCountInCart}>
                      <img className = "icon" src = "/images/cart.png"/>
-                 </span>
+                    </span>
+                </Link>
             </div>
         );
     }
 
     @computed
     get renderTopNav() {
-        const {authStore: {currentUser}, pizzaStore: {pizzaInCart}} = this.props;
+        const {authStore: {currentUser}} = this.props;
         return (
             <div className = "top-nav mb-5 p-3 d-flex justify-content-between align-items-center">
                 <span onClick = {() => {
@@ -66,29 +70,22 @@ class Dashboard extends React.Component<DashboardProps> {
         );
     }
 
-    get renderPizzas() {
-        return (
-            <div className = "d-flex flex-wrap align-items-center justify-content-center">
-                {this.props.pizzaStore.pizzas.map((pizza: any) => (
-                    <Pizza
-                        key = {pizza.id}
-                        pizza = {pizza}
-                    />
-                ))}
-            </div>
-        );
-
-    }
-
     render() {
-        const {pizzas} = this.props.pizzaStore;
-        if (!pizzas) {
+        const {pizzaStore, match} = this.props;
+        if (!pizzaStore.pizzas) {
             return <Loader/>
         }
         return (
             <div className = "dashboard">
                 {this.renderTopNav}
-                {this.renderPizzas}
+                <Switch>
+                    <Route exact
+                           path = "/"
+                           render = {props => <PizzaList pizzas = {pizzaStore.pizzas}/>}/>
+                    <Route exact
+                           path = "/checkout"
+                           render = {props => <Checkout pizzas = {pizzaStore.pizzasInCart}{...props} />}/>
+                </Switch>
             </div>
         );
     }

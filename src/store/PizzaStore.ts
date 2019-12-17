@@ -4,8 +4,8 @@ import {action, computed, observable} from "mobx";
 import {PizzaModel} from "../models/PizzaModel";
 
 export class PizzaStore {
-    @observable pizzas: PizzaStore[];
-    @action setPizzas = (p: PizzaStore[]) => (this.pizzas = p);
+    @observable pizzas: PizzaModel[];
+    @action setPizzas = (p: PizzaModel[]) => (this.pizzas = p);
 
     async listPizzas() {
         try {
@@ -16,12 +16,17 @@ export class PizzaStore {
         }
     }
 
+
     @computed
-    get pizzaInCart() {
-        console.log(this.pizzas.reduce((count, pizza: any) => {
-            return (pizza.quantity || 0) + count;
-        }, 0));
-        return this.pizzas.reduce((count, pizza: any) => {
+    get pizzasInCart() {
+        return this.pizzas.filter((pizza: any) => {
+            return !!(pizza.quantity);
+        });
+    }
+
+    @computed
+    get pizzaCountInCart() {
+        return this.pizzasInCart.reduce((count, pizza: any) => {
             return (pizza.quantity || 0) + count;
         }, 0);
     }

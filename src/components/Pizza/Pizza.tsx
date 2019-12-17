@@ -9,7 +9,6 @@ interface PizzaProps {
 
 const Pizza: React.FC<PizzaProps> = ({pizza}) => {
 
-
     const addToCart = () => {
         pizza.setQuantity((pizza.quantity || 0) + 1);
     };
