@@ -11,8 +11,8 @@ interface LoginProps {
 
 const Login: React.FC<LoginProps> = ({authStore}) => {
 
-    const [email, setEmail]       = useState('theron95@gmail.com');
-    const [password, setPassword] = useState('secret');
+    const [email, setEmail]       = useState('');
+    const [password, setPassword] = useState('');
 
     const handleSubmit = (event: any) => {
         event.preventDefault();
