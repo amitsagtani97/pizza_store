@@ -1,4 +1,8 @@
 .dashboard {
+
+  .dashboard-body{
+    padding: 0 2rem;
+  }
   .top-nav {
     height: 5rem;
     border-bottom: 1px solid #e9ecef;
@@ -41,7 +45,5 @@
         font-weight: bold;
       }
     }
-
-
   }
 }

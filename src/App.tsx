@@ -10,6 +10,7 @@ const App: React.FC = () => {
         <BrowserRouter>
             <Switch>
                 <Route exact path = "/" component = {Dashboard}/>
+                <Route exact path = "/checkout" component = {Dashboard}/>
                 <Route exact path = "/login" component = {Login}/>
                 <Route exact path = "/register" component = {Register}/>
             </Switch>

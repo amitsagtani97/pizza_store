@@ -71,21 +71,26 @@ class Dashboard extends React.Component<DashboardProps> {
     }
 
     render() {
-        const {pizzaStore, match} = this.props;
+        const {pizzaStore, authStore: {currentUser}} = this.props;
         if (!pizzaStore.pizzas) {
             return <Loader/>
         }
         return (
             <div className = "dashboard">
                 {this.renderTopNav}
-                <Switch>
-                    <Route exact
-                           path = "/"
-                           render = {props => <PizzaList pizzas = {pizzaStore.pizzas}/>}/>
-                    <Route exact
-                           path = "/checkout"
-                           render = {props => <Checkout pizzas = {pizzaStore.pizzasInCart}{...props} />}/>
-                </Switch>
+                <div className = "dashboard-body">
+                    <Switch>
+                        <Route exact
+                               path = "/"
+                               render = {props => <PizzaList pizzas = {pizzaStore.pizzas}{...props}/>}/>
+                        <Route exact
+                               path = "/checkout"
+                               render = {props => <Checkout
+                                   pizzaStore = {pizzaStore}
+                                   currentUser = {currentUser}
+                                   pizzas = {pizzaStore.pizzasInCart}{...props} />}/>
+                    </Switch>
+                </div>
             </div>
         );
     }

@@ -2,8 +2,9 @@ import axios from "axios";
 import {ROUTE} from "../Routes";
 import {action, observable} from "mobx";
 import {UserModel} from "../models/UserModel";
+import {BaseStore} from "./BaseStore";
 
-export class AuthStore {
+export class AuthStore extends BaseStore{
     @observable currentUser: UserModel;
     @action setCurrentUser = (currentUser: UserModel) => (this.currentUser = currentUser);
 
@@ -26,10 +27,6 @@ export class AuthStore {
         } catch (e) {
             console.log(e);
         }
-    }
-
-    get authToken() {
-        return "bearer " + localStorage.getItem("token");
     }
 
 }
