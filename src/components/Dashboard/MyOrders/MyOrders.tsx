@@ -7,6 +7,7 @@ import Card from "react-bootstrap/Card";
 import {OrderModel} from "../../../models/OrderModel";
 import {ChoiceModel} from "../../../models/ChoiceModel";
 import Moment from "react-moment";
+import {PizzaRow} from "../../Pizza/PizzaRow";
 
 export interface MyOrdersProps {
     [AUTH_STORE]?: AuthStore;
@@ -23,7 +24,10 @@ class MyOrders extends React.Component<MyOrdersProps> {
     }
 
     render() {
-        const {authStore: {myOrders}} = this.props;
+        const {authStore: {myOrders, currentUser}} = this.props;
+        if (!currentUser) {
+            window.location.href = "/";
+        }
         if (!myOrders) {
             return (
                 <Loader/>
@@ -49,15 +53,11 @@ class MyOrders extends React.Component<MyOrdersProps> {
                                         myOrder.choices.map((choice: ChoiceModel) => {
                                             return (
                                                 <>
-                                                    <div
-                                                        className = "d-flex align-items-center justify-content-between">
-                                                        <div>
-                                                            <img style = {{height: '2rem'}}
-                                                                 src = {choice.pizza.is_veg ? "/images/veg-icon.png" : "/images/non-veg-icon.png"}/>
-                                                            <span className = "mb-0 ml-2">{choice.quantity}  X  {choice.pizza.name}</span>
-                                                        </div>
-                                                        <span>${choice.quantity * choice.pizza.price}</span>
-                                                    </div>
+                                                    <PizzaRow
+                                                        isVeg = {choice.pizza.is_veg}
+                                                        quantity = {choice.quantity}
+                                                        name = {choice.pizza.name}
+                                                        price = {choice.pizza.price}/>
                                                     <hr/>
                                                 </>
                                             )
