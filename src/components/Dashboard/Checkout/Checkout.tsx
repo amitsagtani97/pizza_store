@@ -50,7 +50,7 @@ export const Checkout: React.FC<PizzaListProps> = ({pizzas, currentUser, pizzaSt
                                 </div>
                                 <div className = "d-flex justify-content-between align-items-center">
                                     <span className = "font-weight-bold">Quantity: {pizza.quantity}</span>
-                                    <span className = "font-weight-bold">{pizza.quantity * pizza.price}</span>
+                                    <span className = "font-weight-bold">${pizza.quantity * pizza.price}</span>
                                 </div>
                                 <hr/>
                             </div>

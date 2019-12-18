@@ -5,5 +5,6 @@ export const ROUTE    = {
         DELIVER_ORDER: `${BASE_URL}/deliver`
     },
     ME   : `${BASE_URL}/me`,
+    MY_ORDERS : `${BASE_URL}/me/orders`,
     LOGIN: `${BASE_URL}/login`,
 };

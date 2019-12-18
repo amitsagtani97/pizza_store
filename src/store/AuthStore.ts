@@ -3,9 +3,12 @@ import {ROUTE} from "../Routes";
 import {action, observable} from "mobx";
 import {UserModel} from "../models/UserModel";
 import {BaseStore} from "./BaseStore";
+import {OrderModel} from "../models/OrderModel";
 
-export class AuthStore extends BaseStore{
+export class AuthStore extends BaseStore {
+    @observable myOrders: OrderModel[];
     @observable currentUser: UserModel;
+    @action setMyOrders    = (orders: OrderModel[]) => (this.myOrders = orders);
     @action setCurrentUser = (currentUser: UserModel) => (this.currentUser = currentUser);
 
     async loadUser() {
@@ -24,6 +27,15 @@ export class AuthStore extends BaseStore{
             this.setCurrentUser(data.data.data);
             localStorage.setItem("token", data.data.token);
             window.location.href = "/";
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    async loadMyOrders() {
+        try {
+            const orders = await axios.get(ROUTE.MY_ORDERS, {headers: {Authorization: this.authToken}});
+            this.setMyOrders(orders.data.data);
         } catch (e) {
             console.log(e);
         }

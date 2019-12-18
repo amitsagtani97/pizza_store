@@ -10,6 +10,7 @@ import {AuthStore} from "../../store/AuthStore";
 import {PizzaStore} from "../../store/PizzaStore";
 import {PizzaList} from "./PizzaList/PizzaList";
 import {Checkout} from "./Checkout/Checkout";
+import MyOrders from "./MyOrders/MyOrders";
 
 export interface DashboardProps extends RouteComponentProps {
     [AUTH_STORE]?: AuthStore;
@@ -64,6 +65,7 @@ class Dashboard extends React.Component<DashboardProps> {
                 </span>
                 <div className = "d-flex">
                     {!currentUser && <a className = "btn btn-outline-primary mr-3" href = "/login">Login</a>}
+                    {currentUser && <a className = "btn btn-outline-primary mr-3" href = "/orders">My Orders</a>}
                     {this.renderCart}
                 </div>
             </div>
@@ -89,6 +91,9 @@ class Dashboard extends React.Component<DashboardProps> {
                                    pizzaStore = {pizzaStore}
                                    currentUser = {currentUser}
                                    pizzas = {pizzaStore.pizzasInCart}{...props} />}/>
+                        <Route exact
+                               path = "/orders"
+                               render = {props => <MyOrders/>}/>
                     </Switch>
                 </div>
             </div>
