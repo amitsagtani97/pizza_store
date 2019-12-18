@@ -4,7 +4,7 @@ import {action, computed, observable} from "mobx";
 import {PizzaModel} from "../models/PizzaModel";
 import {BaseStore} from "./BaseStore";
 
-export class PizzaStore extends BaseStore{
+export class PizzaStore extends BaseStore {
     @observable pizzas: PizzaModel[];
     @action setPizzas = (p: PizzaModel[]) => (this.pizzas = p);
 
@@ -18,14 +18,15 @@ export class PizzaStore extends BaseStore{
     }
 
     async deliverOrder(data: any) {
+        console.log(this.authToken);
+        const headers = {
+            'Content-Type' : 'application/json',
+            'Authorization': this.authToken
+        };
         try {
             await axios.post(ROUTE.Pizza.DELIVER_ORDER, {
-                headers: {
-                    'Content-Type' : 'application/json',
-                    'Authorization': this.authToken
-                },
                 ...data
-            });
+            }, {headers});
             window.location.href = "/";
         } catch (e) {
             console.log(e);
