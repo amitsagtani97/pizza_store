@@ -43,14 +43,14 @@ export const Checkout: React.FC<PizzaListProps> = ({pizzas, currentUser, pizzaSt
                     pizzas.map((pizza: PizzaModel) => {
                         return (
                             <div key = {pizza.id}>
-                                <div className = "d-flex align-items-center">
-                                    <img style = {{height: '2rem'}}
-                                         src = {pizza.is_veg ? "/images/veg-icon.png" : "/images/non-veg-icon.png"}/>
-                                    <h5 className = "mb-0 ml-2">{pizza.name}</h5>
-                                </div>
-                                <div className = "d-flex justify-content-between align-items-center">
-                                    <span className = "font-weight-bold">Quantity: {pizza.quantity}</span>
-                                    <span className = "font-weight-bold">${pizza.quantity * pizza.price}</span>
+                                <div
+                                    className = "d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <img style = {{height: '2rem'}}
+                                             src = {pizza.is_veg ? "/images/veg-icon.png" : "/images/non-veg-icon.png"}/>
+                                        <span className = "mb-0 ml-2">{pizza.quantity}  X  {pizza.name}</span>
+                                    </div>
+                                    <span>${pizza.quantity * pizza.price}</span>
                                 </div>
                                 <hr/>
                             </div>
@@ -59,7 +59,7 @@ export const Checkout: React.FC<PizzaListProps> = ({pizzas, currentUser, pizzaSt
                 }
                 <div className = "d-flex justify-content-between align-items-center">
                     <span className = "font-weight-bold">Subtotal:</span>
-                    <span className = "font-weight-bold">{totalAmount()}</span>
+                    <span className = "font-weight-bold">${totalAmount()}</span>
                 </div>
                 <br/>
 
