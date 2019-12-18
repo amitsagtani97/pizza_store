@@ -44,7 +44,7 @@ const Pizza: React.FC<PizzaProps> = ({pizza}) => {
                     <span className = "name">{pizza.name}</span>
                     <img src = {pizza.is_veg ? "/images/veg-icon.png" : "/images/non-veg-icon.png"}/>
                 </div>
-                <Card.Text>{pizza.description}</Card.Text>
+                <Card.Text className="description">{pizza.description}</Card.Text>
                 <div className = "d-flex align-items-center justify-content-between">
                     <span className = "price">${pizza.price}</span>
                     {addToCartBtn()}

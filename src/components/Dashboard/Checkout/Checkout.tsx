@@ -13,7 +13,7 @@ export interface PizzaListProps {
 }
 
 export const Checkout: React.FC<PizzaListProps> = ({pizzas, currentUser, pizzaStore}) => {
-    const [address, setAddress] = useState('');
+    const [address, setAddress] = useState(currentUser?.address);
 
     if (!pizzas || pizzas.length === 0) {
         window.location.href = "/";
@@ -63,15 +63,14 @@ export const Checkout: React.FC<PizzaListProps> = ({pizzas, currentUser, pizzaSt
                 </div>
                 <br/>
 
-                <Form className = "login" onSubmit = {handleSubmit}>
-                    {!currentUser && <Form.Group controlId = "address">
-						<Form.Label>Email address</Form.Label>
-						<Form.Control type = "text"
-						              placeholder = "Enter your delivery address"
-						              value = {address} required
-						              onChange = {(event: any) => setAddress(event.target.value)}/>
-					</Form.Group>
-                    }
+                <Form onSubmit = {handleSubmit}>
+                    <Form.Group controlId = "address">
+                        <Form.Label>Enter your delivery address:</Form.Label>
+                        <Form.Control type = "text"
+                                      placeholder = "Enter your delivery address"
+                                      value = {address} required
+                                      onChange = {(event: any) => setAddress(event.target.value)}/>
+                    </Form.Group>
 
                     <Button variant = "primary" type = "submit">
                         Continue

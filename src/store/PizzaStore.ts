@@ -19,14 +19,14 @@ export class PizzaStore extends BaseStore{
 
     async deliverOrder(data: any) {
         try {
-            const response = await axios.post(ROUTE.Pizza.DELIVER_ORDER, {
+            await axios.post(ROUTE.Pizza.DELIVER_ORDER, {
                 headers: {
                     'Content-Type' : 'application/json',
                     'Authorization': this.authToken
                 },
                 ...data
             });
-            console.log(response);
+            window.location.href = "/";
         } catch (e) {
             console.log(e);
         }
