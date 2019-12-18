@@ -24,10 +24,8 @@ class MyOrders extends React.Component<MyOrdersProps> {
     }
 
     render() {
-        const {authStore: {myOrders, currentUser}} = this.props;
-        if (!currentUser) {
-            window.location.href = "/";
-        }
+        const {authStore: {myOrders}} = this.props;
+
         if (!myOrders) {
             return (
                 <Loader/>
@@ -52,14 +50,14 @@ class MyOrders extends React.Component<MyOrdersProps> {
                                     {
                                         myOrder.choices.map((choice: ChoiceModel) => {
                                             return (
-                                                <>
+                                                <div key = {choice.id}>
                                                     <PizzaRow
                                                         isVeg = {choice.pizza.is_veg}
                                                         quantity = {choice.quantity}
                                                         name = {choice.pizza.name}
                                                         price = {choice.pizza.price}/>
                                                     <hr/>
-                                                </>
+                                                </div>
                                             )
                                         })
                                     }

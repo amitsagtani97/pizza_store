@@ -13,18 +13,17 @@ export class AuthStore extends BaseStore {
 
     async loadUser() {
         try {
-            const user = await axios.get(ROUTE.ME, {headers: {Authorization: this.authToken}});
-            this.setCurrentUser(user.data.data);
+            const data = await axios.get(ROUTE.ME, {headers: {Authorization: this.authToken}});
+            this.setCurrentUser(new UserModel(data.data.data));
         } catch (e) {
-            localStorage.removeItem("token");
-            console.log(e);
+            this.logOut();
         }
     }
 
     async login(email: string, password: string) {
         try {
             const data = await axios.get(ROUTE.LOGIN, {params: {email, password}});
-            this.setCurrentUser(data.data.data);
+            this.setCurrentUser(new UserModel(data.data.data));
             localStorage.setItem("token", data.data.token);
             window.location.href = "/";
         } catch (e) {
@@ -35,10 +34,17 @@ export class AuthStore extends BaseStore {
     async loadMyOrders() {
         try {
             const orders = await axios.get(ROUTE.MY_ORDERS, {headers: {Authorization: this.authToken}});
-            this.setMyOrders(orders.data.data);
+            this.setMyOrders(orders.data.data.map((order: any) => new OrderModel(order)));
         } catch (e) {
-            console.log(e);
+            if(e.response.status === 401){
+                window.location.href = "/login";
+            }
         }
     }
 
+    logOut(){
+        localStorage.removeItem("token");
+    }
 }
+
+
